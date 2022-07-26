@@ -1,10 +1,22 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <header v-if="path !== '/sign-in'" class="sticky t-0 z-50 bg-orange-300">
+    <NavBar />
+  </header>
+  <router-view />
+  <footer v-if="path !== '/sign-in'" class="w-full bg-slate-900 text-white p-10">
+    <Footer />
+  </footer>
 </template>
+
+<script setup>
+import "./assets/tailwind.css";
+import NavBar from "./components/NavBar.vue";
+import Footer from "./components/Footer.vue";
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const path = computed(() => router.currentRoute.value.path);
+</script>
 
 <style>
 #app {
@@ -13,18 +25,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
